@@ -7,8 +7,11 @@
     "jest-dom": "^3.2.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-html5-video-editor": "^1.2.0",
+    "react-range": "^1.0.5",
     "react-router-dom": "^5.0.0",
-    "react-scripts": "3.0.1"
+    "react-scripts": "3.0.1",
+    "video-trim-modal": "^1.0.3"
   },
   "jest": {
     "collectCoverageFrom": [
