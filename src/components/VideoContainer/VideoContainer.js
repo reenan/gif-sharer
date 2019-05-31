@@ -16,7 +16,7 @@ export default class VideoContainer extends Component {
 
   componentDidMount() {
 
-    // Better a workaround then not finishing
+    // Better a tiny workaround than not finishing
     setTimeout(() => {
       this.setState({
         trimValues: [0, this.video.duration]
@@ -25,6 +25,10 @@ export default class VideoContainer extends Component {
       this.video.play();
       this.loopInterval = setInterval(this.loopVideo, 30);
     }, 100);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.loopInterval);
   }
 
   onChangeRange = (trimValues) => {
@@ -38,6 +42,10 @@ export default class VideoContainer extends Component {
     }
   };
 
+  getCroppedVideoDuration = () => {
+    return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2) + 's';
+  }
+
   render() {
     const { trimValues } = this.state;
 
@@ -49,10 +57,14 @@ export default class VideoContainer extends Component {
 
         {
           this.video ? 
-            <Range values={trimValues} step={0.01} min={0}
-              max={this.video.duration} onChange={this.onChangeRange}
-              renderTrack={Track.bind(this, trimValues, this.video.duration)} renderThumb={Thumb}
-            /> : null
+            <div>
+              <Range values={trimValues} step={0.01} min={0}
+                max={this.video.duration} onChange={this.onChangeRange}
+                renderTrack={Track.bind(this, trimValues, this.video.duration)} renderThumb={Thumb}
+              />
+              
+              <p className='duration'>CROPPED VIDEO DURATION: {this.getCroppedVideoDuration()}</p>
+            </div> : null
         }
 
       </div>
@@ -66,9 +78,9 @@ const Thumb = ({ props, isDragged }) => (
     {...props}
     style={{
       ...props.style,
-      height: '42px',
-      width: '42px',
-      borderRadius: '4px',
+      height: '30px',
+      width: '30px',
+      borderRadius: '100%',
       backgroundColor: '#FFF',
       display: 'flex',
       justifyContent: 'center',
@@ -78,8 +90,9 @@ const Thumb = ({ props, isDragged }) => (
   >
     <div
       style={{
-        height: '16px',
-        width: '5px',
+        height: '10px',
+        width: '10px',
+        borderRadius: '100%',
         backgroundColor: isDragged ? '#548BF4' : '#CCC'
       }}
     />
@@ -88,13 +101,11 @@ const Thumb = ({ props, isDragged }) => (
 
 const Track = (trimValues, max, { props, children }) => (
   <div
+    className='track'
     onMouseDown={props.onMouseDown}
     onTouchStart={props.onTouchStart}
     style={{
-      ...props.style,
-      height: '36px',
-      display: 'flex',
-      width: '100%'
+      ...props.style
     }}
   >
     <div

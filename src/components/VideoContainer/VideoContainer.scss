@@ -1,3 +1,19 @@
-.uploader {
-  
+.video-container {
+  width: 80%;
+  margin: auto;
+  text-align: center;
+
+  video {
+    width: 100%;
+  }
+
+  .track {
+    height: 36px;
+    width: 100%;
+    margin: 30px 0 15px 0;
+  }
+  .duration {
+    color: rgb(110, 139, 163);
+    font-size: 16px;
+  }
 }
