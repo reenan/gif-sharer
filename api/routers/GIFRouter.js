@@ -1,6 +1,5 @@
 const { Router } = require('express');
 const router = new Router()
-const { Op } = require('sequelize')
 const fetch = require('fetch-base64');
 
 const { uploadGIF, createGIFFile } = require('../helpers');
