@@ -11,7 +11,7 @@ module.exports = {
         allowNull: false,
         type: DataTypes.STRING(1000),
       },
-      public: {
+      isPrivate: {
         allowNull: false,
         type: DataTypes.BOOLEAN,
       },
@@ -19,7 +19,7 @@ module.exports = {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      expiresAt: {
+      expirationDate: {
         allowNull: true,
         type: DataTypes.DATE,
       },

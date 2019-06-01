@@ -18,10 +18,13 @@ export default class Uploader extends Component {
     const file = target.files[0];
 
     this.setState({ file }, () => {
-      const reader = new FileReader();
-  
-      reader.onload = this.defineFile;
-      reader.readAsDataURL(file);
+
+      if (file != null) {
+        const reader = new FileReader();
+    
+        reader.onload = this.defineFile;
+        reader.readAsDataURL(file);
+      }
     })
   }
 
@@ -40,10 +43,10 @@ export default class Uploader extends Component {
         <p className='title'>Share GIFS!</p>
         
         <div className='input-wrapper'>
-          <input type='file' onChange={this.onMediaChange} />
+          <input accept='.mp4,.gif' type='file' onChange={this.onMediaChange} />
           <div className='button'>
             <p>Click to upload</p>
-            <span>or, drag and drop</span>
+            <span>or, drag and drop (.mp4 or .gif)</span>
 
             <span className='filename'>
               Selected: { file ? file.name : 'None' }            

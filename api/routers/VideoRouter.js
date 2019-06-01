@@ -9,7 +9,12 @@ const { convertToGIF } = require('../helpers/convertToGIF');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
-  const { video, startTime, duration } = req.body;
+  const { video, startTime, duration, isPrivate, password, expirationDate } = req.body;
+
+  if (isPrivate && !password) {
+    res.status(400).send('Password is required for private GIFs');
+    return;
+  }
 
   if (duration > 5) {
     res.status(400).send('GIF duration too long');
@@ -19,7 +24,12 @@ router.post('/', async (req, res) => {
   const GIFPath = await convertToGIF(video, startTime, duration);
   const GIFFirebaseURL = await uploadGIF(GIFPath);
   
-  const GIFObject = await GIF.create({ url: GIFFirebaseURL, public: true });
+  const GIFObject = await GIF.create({
+    url: GIFFirebaseURL,
+    isPrivate: isPrivate,
+    password: password,
+    expirationDate: expirationDate
+  });
 
   res.status(201).send({ id: GIFObject.dataValues.id });
 });

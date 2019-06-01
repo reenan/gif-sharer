@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const router = new Router()
+const { Op } = require('sequelize')
 
 const { uploadGIF } = require('../helpers/firebase');
 
@@ -21,7 +22,15 @@ router.get('/', async (_req, res) => {
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
 
-  const result = await GIF.findByPk(id);
+  const result = await GIF.findOne({
+    where: {
+      id: id,
+      expirationDate: {
+        [Op.gte]: new Date()
+      }
+    }
+  });
+
   res.json(result)
 });
 

@@ -3,6 +3,11 @@ import React, { Component } from 'react'
 
 
 import { Range, getTrackBackground } from 'react-range';
+import PasswordMask from 'react-password-mask';
+import DatePicker from 'react-datepicker'
+import Toggle from 'react-toggle'
+import '../../../node_modules/react-toggle/style.css';
+import '../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
 
 import './VideoContainer.scss';
 
@@ -12,19 +17,22 @@ export default class VideoContainer extends Component {
 
     this.state = {
       trimValues: [0, 0],
+      isPrivate: false,
+      changeHasExpirationDate: false,
+      password: '',
+      expirationDate: null,
+      loading: false
     }
   }
 
   componentDidMount() {
 
-    // Better a tiny workaround than not finishing
     setTimeout(() => {
       this.setState({
         trimValues: [0, this.video.duration]
       });
 
-      this.video.play();
-      this.loopInterval = setInterval(this.loopVideo, 30);
+      this.startLoop();
     }, 100);
   }
 
@@ -33,10 +41,21 @@ export default class VideoContainer extends Component {
   }
 
   onChangeRange = (trimValues) => {
-    this.setState({ trimValues });
+    this.setState({ trimValues }, this.startLoop);
+  }
+
+  startLoop = () => {
+    this.video.play();
+
+    clearInterval(this.loopInterval);
+    this.loopInterval = setInterval(this.loopVideo, 30);
   }
 
   loopVideo = () => {
+    if (this.video.currentTime < this.state.trimValues[0]) {
+      this.video.currentTime = this.state.trimValues[0];
+    }
+
     if (this.video.currentTime >= this.state.trimValues[1]) {
       this.video.currentTime = this.state.trimValues[0];
       this.video.play();
@@ -44,6 +63,8 @@ export default class VideoContainer extends Component {
   }
 
   cropVideo = () => {
+    this.setState({ loading: true });
+
     fetch('http://localhost:7070/api/video', {
       method: 'POST',
       headers: {
@@ -54,11 +75,16 @@ export default class VideoContainer extends Component {
         video: this.props.file.content,
         startTime: this.state.trimValues[0],
         duration: this.getCroppedVideoDuration(),
+        isPrivate: this.state.isPrivate,
+        password: this.state.isPrivate ? this.state.password : null,
+        expirationDate: this.state.hasExpirationDate ? this.state.expirationDate : null,
       })
     }).then((data) => {
       console.log('then: ', data);
+      this.setState({ loading: false });
     }).catch((err) => {
       console.log('catch: ', err);
+      this.setState({ loading: false });
     });
   }
 
@@ -66,12 +92,65 @@ export default class VideoContainer extends Component {
     return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2);
   }
 
+  changeIsPrivate = (e) => {
+    this.setState({
+      isPrivate: e.target.checked
+    })
+  }
+
+  changePassword = (e) => {
+    this.setState({
+      password: e.target.value
+    })
+  }
+
+  changeHasExpirationDate = (e) => {
+    this.setState({
+      hasExpirationDate: e.target.checked
+    })
+  }
+
+  changeExpirationDate = (value) => {
+    console.log(value)
+    this.setState({
+      expirationDate: value
+    })
+  }
+
+  canConvertToGIF = () => {
+    let isValid = true;
+
+    if (this.getCroppedVideoDuration() > 5) {
+      isValid = false;
+    }
+
+    if (this.state.isPrivate && this.state.password.length === 0) {
+      isValid = false;
+    }
+
+    if (this.state.hasExpirationDate && this.state.expirationDate === null) {
+      isValid = false;
+    }
+
+    return isValid;
+  }
+
   render() {
-    const { trimValues } = this.state;
+    const {
+      trimValues,
+      isPrivate,
+      hasExpirationDate,
+      expirationDate,
+      password,
+      loading,
+    } = this.state;
+    
     const croppedVideoDuration = this.getCroppedVideoDuration();
+    const canConvertToGIF = this.canConvertToGIF();
+    
     return (
       <div className='video-container'>
-        <video accept='.mp4,.gif' ref={video => this.video = video}
+        <video ref={video => this.video = video}
           muted src={this.props.file.content}
         />
 
@@ -84,13 +163,63 @@ export default class VideoContainer extends Component {
               />
 
               <span className={`duration ${croppedVideoDuration > 5 ? 'red' : ''}`}>Video Duration: {croppedVideoDuration}s</span>
+
               { croppedVideoDuration > 5 ?
                   <span className='length-warning'>Please, crop your video to a max of 5 seconds</span> : null
               }
             </div> : null
         }
 
-        <div className='upload-button' onClick={this.cropVideo}>
+        <div className='protection-wrapper'>
+          <label>
+            <span>Protect your GIF with a password?</span>
+            <Toggle
+              defaultChecked={false}
+              icons={false}
+              onChange={this.changeIsPrivate} />
+          </label>
+        </div>
+          
+        {
+          isPrivate ?
+            <div className='password-wrapper'>  
+              <label>
+                <span>Password:</span>
+                <PasswordMask
+                  value={password}
+                  maxLength={50}
+                  onChange={this.changePassword}
+                  inputClassName='input-password'
+                  buttonClassName='btn-show-hide'
+                  useVendorStyles={false}
+                />
+              </label>
+            </div> : null
+        }
+
+
+        <div className='expiration-wrapper'>
+          <label>
+            <span>Determine an expiration date for your GIF's URL?</span>
+            <Toggle
+              defaultChecked={false}
+              icons={false}
+              onChange={this.changeHasExpirationDate} />
+          </label>
+        </div>
+          
+        {
+          hasExpirationDate ?
+            <div className='expiration-date-wrapper'>  
+              <label>
+                <span>Expiration date:</span>
+                <DatePicker fixedHeight selected={expirationDate}
+                  onChange={this.changeExpirationDate} />
+              </label>
+            </div> : null
+        }
+
+        <div className={`${loading || !canConvertToGIF ? 'disabled' : ''} upload-button`} onClick={this.cropVideo}>
           <p>Share</p>
         </div>
 

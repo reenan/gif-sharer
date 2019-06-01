@@ -19,16 +19,19 @@
     height: 100px;
     margin: 45px auto;
     border: 2px dashed rgba(black, 0.5);
-    
+    border-radius: 30px;
+
     input[type="file"] {
       cursor: pointer;
       width: 100%;
       height: 100%;
       outline: none;
+      border-radius: 30px;
 
       &:after {
         @include absolute-fill();
         content: '';
+        border-radius: 30px;
         pointer-events: none;
         background: white;
       }

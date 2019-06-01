@@ -38,16 +38,10 @@ const uploadGIF = (filePath) => {
     }, (err) => {
       if (err) reject(err);
 
-      console.log('Pploaded successfully');
-      // Generate a public signed URL with expiration date
-      const file = bucket.file(fileName);
-      const config = { action: 'read', expires: '03-01-2500' };
+      console.log('Uploaded successfully');
+      const baseURL = 'https://storage.googleapis.com/';
 
-      file.getSignedUrl(config, (err, url) => {
-        if (err) reject(err);
-
-        resolve(url);
-      });
+      resolve(`${baseURL}${bucket.id}/${fileName}`);
     });
   })
 }

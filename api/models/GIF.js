@@ -6,9 +6,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: DataTypes.UUIDV4
     },
     url: DataTypes.STRING,
-    public: DataTypes.BOOLEAN,
+    isPrivate: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
-    expiresAt: DataTypes.DATE,
+    expirationDate: DataTypes.DATE,
   };
 
   const GIFScopes = {
