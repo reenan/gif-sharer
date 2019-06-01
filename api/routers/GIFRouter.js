@@ -37,23 +37,18 @@ router.get('/:id', async (req, res) => {
   const { id } = req.params;
   const { password } = req.headers;
 
-  const result = await GIF.unscoped().findOne({
-    where: {
-      id: id,
-      expirationDate: {
-        [Op.or]: {
-          [Op.gte]: new Date(),
-          [Op.eq]: null
-        }
-      }
-    }
-  });
-
+  const result = await GIF.unscoped().findByPk(id);
+  
   if (result == null) {
     res.sendStatus(404);
     return;
   }
 
+  if (result.dataValues.expirationDate && result.dataValues.expirationDate < new Date()) {
+    res.sendStatus(410);
+    return;
+  }
+  
   const { isPrivate, password: GIFPassword } = result.dataValues;
 
   if (isPrivate && password !== GIFPassword) {

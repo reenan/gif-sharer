@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { NavLink, withRouter } from 'react-router-dom';
 
 import './SharedGIF.scss';
-import { Button, Loader, PasswordField } from 'components';
+import { Button, Loader, PasswordField, Modal } from 'components';
 
 class SharedGIF extends Component {
 
@@ -17,7 +17,8 @@ class SharedGIF extends Component {
       isPrivate: false,
       loading: true,
       invalidPassword: false,
-      password: ''
+      password: '',
+      badStatus: false
     }
   }
 
@@ -36,8 +37,12 @@ class SharedGIF extends Component {
       }
     }).then(async (data) => {
 
-      if (data.status === 404) {
-        this.props.history.push('/');
+      if (data.status === 410 || data.status === 404) {  
+        this.setState({
+          badStatus: data.status,
+          loading: false,
+        });
+
         return;
       }
 
@@ -45,7 +50,7 @@ class SharedGIF extends Component {
         this.setState({
           isPrivate: true,
           loading: false,
-          invalidPassword: this.state.password !== ''
+          invalidPassword: this.state.password !== '',
         })
 
         return;
@@ -67,14 +72,28 @@ class SharedGIF extends Component {
     })
   }
 
+  getBadStatusMessage = () => {
+    const { badStatus } = this.state;
+
+    switch (badStatus) {
+      case 404:
+        return 'Looks like this file does not exists.';
+      case 410:
+      default:
+        return `Looks like this file's experation day passed.`
+    }
+  }
+
   render() {
-    const { url, id, base64, loading, isPrivate, password, invalidPassword } = this.state;
+    const { url, id, base64, loading, isPrivate, password, invalidPassword, badStatus } = this.state;
+
     return (
       <div className='shared-gif-wrapper'>
 
         {
          loading ? <Loader /> : (
           <div>
+
             {
               isPrivate ? (
                 <div>
@@ -89,7 +108,11 @@ class SharedGIF extends Component {
                     <span>Request</span>
                   </Button>
                 </div>
-              ) : (
+              ) : null
+            }
+            
+            {
+              base64 ? (
                 <div>
                   <img ref={(GIF) => this.GIF = GIF} alt='Shared GIF' src={url} />
       
@@ -98,16 +121,30 @@ class SharedGIF extends Component {
                       <span>Download</span>
                     </Button>
                   </a>
-      
-                  </div>
-                  )
-                }
+                </div>
+              ) : null
+            }
 
-            <NavLink to='/' className='share-a-gif'>
-              <Button>
-                <span>Share a GIF!</span>
-              </Button>
-            </NavLink>
+            {
+              badStatus ? (
+                <Modal open={true}>
+                  <p>{this.getBadStatusMessage()}</p>
+
+                  <NavLink to='/' className='share-a-gif'>
+                    <Button>
+                      <span>Share a GIF!</span>
+                    </Button>
+                  </NavLink>
+                </Modal>
+              ) : (
+                <NavLink to='/' className='share-a-gif'>
+                  <Button>
+                    <span>Share a GIF!</span>
+                  </Button>
+                </NavLink>
+              )
+            }
+            
           </div>
          )
         }

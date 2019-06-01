@@ -124,15 +124,15 @@ class GIFUpload extends Component {
 						<Loader /> : null
 				}
 
-				<Modal className='gif-details-modal' open={modaIsOpen}>
-						<p>Use this link to share your GIF with the world:</p>
-						<NavLink to={`/${uploadedID}`}>
-							<p>{window.location.href}{uploadedID}</p>
-						</NavLink>
+				<Modal open={modaIsOpen}>
+					<p>Use this link to share your GIF with the world:</p>
+					<NavLink to={`/${uploadedID}`}>
+						<p>{window.location.href}{uploadedID}</p>
+					</NavLink>
 
-						<Button onClick={this.closeModal}>
-							<p>Close</p>
-						</Button>
+					<Button onClick={this.closeModal}>
+						<p>Close</p>
+					</Button>
 				</Modal>
 
 				<div className='protection-wrapper'>

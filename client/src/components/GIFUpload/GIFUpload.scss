@@ -5,8 +5,12 @@
   max-width: 90%;
   margin: auto;
 
-  .gif-details-modal {
+  .modal {
     z-index: 5;
+
+    .button {
+      float: right;
+    }
   }
 
   .protection-wrapper, .expiration-wrapper {
