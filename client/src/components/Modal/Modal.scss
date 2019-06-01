@@ -1,0 +1,57 @@
+@import '../../_mixins.scss';
+
+.modal {
+	@include transition(opacity 400ms ease-out);
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	height: 100vh;
+	text-align: center;
+	display: table;
+
+	pointer-events: none;
+	opacity: 0;
+
+	.overlay {
+		@include absolute-fill();
+		@include transition(opacity 400ms);
+		background-color: black;
+		pointer-events: none;
+		opacity: 0;
+		z-index: 1;
+	}
+
+	&.open {
+		opacity: 1;
+		pointer-events: auto;
+
+		.overlay {
+			opacity: 0.2;
+			pointer-events: auto;
+		}
+	}
+
+	.modal-inner {
+		display: table-cell;
+		vertical-align: middle;
+
+		.modal-content-area {
+			@include box-shadow(0px 3px 5px 0px, rgba(0, 0, 0, 0.15));
+			box-sizing: border-box;
+			text-align: left;
+			position: relative;
+			overflow-x: hidden;
+			z-index: 2;
+			display: inline-block;
+			background-color: white;
+			padding: 20px 35px 20px 35px;
+			border-radius: 5px;
+
+			.button {
+				float: right;
+				margin-top: 15px;
+			}
+		}
+	}
+}

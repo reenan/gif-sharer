@@ -1,0 +1,27 @@
+@import '../../_mixins.scss';
+
+.button {
+	@include transition(background 300ms);
+	margin: auto;
+	display: inline-block;
+	text-align: center;
+	border-radius: 25%;
+	color: white;
+	height: 40px;
+	border-radius: 40px;
+	line-height: 40px;
+	width: 180px;
+	cursor: pointer;
+	
+	&.default {
+		background-color: #6bbcff;
+		&:hover {
+		 background-color: darken(#6bbcff, 15);
+	 }
+	}
+
+	&.disabled {
+		pointer-events: none;
+		background-color: #dedede;
+	}
+}

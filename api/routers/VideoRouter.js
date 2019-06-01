@@ -1,11 +1,8 @@
 const { Router } = require('express');
-const uuid4 = require('uuid4');
 
 const router = new Router()
 
-const { uploadGIF } = require('../helpers/firebase');
-const { convertToGIF } = require('../helpers/convertToGIF');
-
+const { uploadGIF, convertToGIF } = require('../helpers');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
@@ -21,9 +18,9 @@ router.post('/', async (req, res) => {
     return;
   }
 
-  const GIFPath = await convertToGIF(video, startTime, duration);
-  const GIFFirebaseURL = await uploadGIF(GIFPath);
-  
+  const GIFFile = await convertToGIF(video, startTime, duration);
+  const GIFFirebaseURL = await uploadGIF(GIFFile);
+
   const GIFObject = await GIF.create({
     url: GIFFirebaseURL,
     isPrivate: isPrivate,

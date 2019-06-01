@@ -2,15 +2,28 @@ const { Router } = require('express');
 const router = new Router()
 const { Op } = require('sequelize')
 
-const { uploadGIF } = require('../helpers/firebase');
-
+const { uploadGIF, createGIFFile } = require('../helpers');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
-  //const GIFFirebaseURL = await uploadGIF(GIFPath);
-  //console.log('GIFFirebaseURL: ', GIFFirebaseURL);
+  const { GIF: GIFData, isPrivate, password, expirationDate } = req.body;
 
-  res.sendStatus(200);
+  if (isPrivate && !password) {
+    res.status(400).send('Password is required for private GIFs');
+    return;
+  }
+
+  const GIFFile = await createGIFFile(GIFData);
+  const GIFFirebaseURL = await uploadGIF(GIFFile);
+
+  const GIFObject = await GIF.create({
+    url: GIFFirebaseURL,
+    isPrivate: isPrivate,
+    password: password,
+    expirationDate: expirationDate
+  });
+
+  res.status(201).send({ id: GIFObject.dataValues.id });
 
 });
 
@@ -26,7 +39,10 @@ router.get('/:id', async (req, res) => {
     where: {
       id: id,
       expirationDate: {
-        [Op.gte]: new Date()
+        [Op.or]: {
+          [Op.gte]: new Date(),
+          [Op.eq]: null
+        }
       }
     }
   });

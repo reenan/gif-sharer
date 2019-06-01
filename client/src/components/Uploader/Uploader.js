@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-import { GIFContainer, VideoContainer } from '../';
+import { GIFWrapper, VideoWrapper } from '../';
 import './Uploader.scss';
 
 export default class Uploader extends Component {
@@ -44,7 +44,7 @@ export default class Uploader extends Component {
         
         <div className='input-wrapper'>
           <input accept='.mp4,.gif' type='file' onChange={this.onMediaChange} />
-          <div className='button'>
+          <div className='file-button'>
             <p>Click to upload</p>
             <span>or, drag and drop (.mp4 or .gif)</span>
 
@@ -60,7 +60,7 @@ export default class Uploader extends Component {
           file && file.content ?
             (
               file.type.indexOf('video') !== -1 ? 
-                <VideoContainer file={file} /> : <GIFContainer file={file} />
+                <VideoWrapper video={file} /> : <GIFWrapper GIF={file} />
             ) : null
         }
 

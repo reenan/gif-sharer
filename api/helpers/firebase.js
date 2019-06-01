@@ -25,13 +25,13 @@ admin.initializeApp({
 // Get firebase bucket reference
 const bucket = admin.storage().bucket();
 
-const uploadGIF = (filePath) => {
+const uploadGIF = (file) => {
   return new Promise((resolve, reject) => {
     const fileName = uuid4();
-
     console.log('Will upload to firebase');
+
     // Upload new file to firebase
-    bucket.upload(filePath, {
+    bucket.upload(file, {
       destination: fileName,
       public: true,
       metadata: { contentType: 'image/gif' }
