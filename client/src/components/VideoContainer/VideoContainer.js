@@ -21,7 +21,7 @@ export default class VideoContainer extends Component {
       this.setState({
         trimValues: [0, this.video.duration]
       });
-  
+
       this.video.play();
       this.loopInterval = setInterval(this.loopVideo, 30);
     }, 100);
@@ -33,14 +33,33 @@ export default class VideoContainer extends Component {
 
   onChangeRange = (trimValues) => {
     this.setState({ trimValues });
-  } 
-   
+  }
+
   loopVideo = () => {
     if (this.video.currentTime >= this.state.trimValues[1]) {
       this.video.currentTime = this.state.trimValues[0];
       this.video.play();
     }
-  };
+  }
+
+  cropVideo = () => {
+    fetch('http://localhost:7070/api/gif', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        video: this.props.file.content,
+        trimValues: this.state.trimValues,
+        duration: this.video.duration,
+      })
+    }).then((data) => {
+      console.log('then: ', data);
+    }).catch((err) => {
+      console.log('catch: ', err);
+    });
+  }
 
   getCroppedVideoDuration = () => {
     return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2) + 's';
@@ -56,16 +75,18 @@ export default class VideoContainer extends Component {
         />
 
         {
-          this.video ? 
+          this.video ?
             <div>
               <Range values={trimValues} step={0.01} min={0}
                 max={this.video.duration} onChange={this.onChangeRange}
                 renderTrack={Track.bind(this, trimValues, this.video.duration)} renderThumb={Thumb}
               />
-              
+
               <p className='duration'>CROPPED VIDEO DURATION: {this.getCroppedVideoDuration()}</p>
             </div> : null
         }
+
+        <button onClick={this.cropVideo}>Send</button>
 
       </div>
     )
