@@ -29,6 +29,7 @@ const uploadGIF = (filePath) => {
   return new Promise((resolve, reject) => {
     const fileName = uuid4();
 
+    console.log('Will upload to firebase');
     // Upload new file to firebase
     bucket.upload(filePath, {
       destination: fileName,
@@ -37,6 +38,7 @@ const uploadGIF = (filePath) => {
     }, (err) => {
       if (err) reject(err);
 
+      console.log('Pploaded successfully');
       // Generate a public signed URL with expiration date
       const file = bucket.file(fileName);
       const config = { action: 'read', expires: '03-01-2500' };

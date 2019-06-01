@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js"
+    "start": "node app.js",
+    "dev": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,13 +20,15 @@
     "firebase-admin": "^8.0.0",
     "fluent-ffmpeg": "^2.1.2",
     "google-auth-library": "^4.1.0",
-    "mysql": "github:mysqljs/mysql",
+    "mysql2": "^1.6.5",
     "request": "^2.88.0",
+    "sequelize": "^5.8.7",
     "tmp": "^0.1.0",
     "uuid4": "^1.1.4"
   },
   "devDependencies": {
-    "nodemon": "^1.19.1"
+    "nodemon": "^1.19.1",
+    "sequelize-cli": "^5.4.0"
   },
   "keywords": [],
   "description": ""

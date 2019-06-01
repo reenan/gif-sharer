@@ -22,3 +22,16 @@
 	-o-transition: $args;
 	transition: $args;
 }
+
+@mixin text-overflow($type) {
+	white-space: nowrap;
+	text-overflow: $type;
+	-o-text-overflow: $type;
+	-ms-text-overflow: $type;
+	overflow: hidden;
+}
+
+@mixin vertical-align($value) {
+  display: inline-block;
+  vertical-align: $value
+}

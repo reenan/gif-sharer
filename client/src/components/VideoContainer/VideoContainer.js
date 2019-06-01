@@ -52,7 +52,7 @@ export default class VideoContainer extends Component {
       },
       body: JSON.stringify({
         video: this.props.file.content,
-        startPosition: this.state.trimValues[0],
+        startTime: this.state.trimValues[0],
         duration: this.getCroppedVideoDuration(),
       })
     }).then((data) => {
@@ -71,7 +71,7 @@ export default class VideoContainer extends Component {
     const croppedVideoDuration = this.getCroppedVideoDuration();
     return (
       <div className='video-container'>
-        <video ref={video => this.video = video}
+        <video accept='.mp4,.gif' ref={video => this.video = video}
           muted src={this.props.file.content}
         />
 
@@ -85,7 +85,7 @@ export default class VideoContainer extends Component {
 
               <span className={`duration ${croppedVideoDuration > 5 ? 'red' : ''}`}>Video Duration: {croppedVideoDuration}s</span>
               { croppedVideoDuration > 5 ?
-                  <span className='length-warning'>Please, crop your video to a max of 15 seconds</span> : null
+                  <span className='length-warning'>Please, crop your video to a max of 5 seconds</span> : null
               }
             </div> : null
         }

@@ -7,8 +7,6 @@ const router = require('./routers');
 const app = express();
 const cors = require('cors');
 
-const connection = require('./database/connection');
-
 app.use(bodyParser.json({ limit: '50mb' }));
 app.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 
@@ -22,12 +20,6 @@ const options = {
 
 // Handle cors pre-flight request.
 app.use(cors(options));
-
-// Inject db connection reference to requests
-app.use(function(req, _res, next){
-  req.db = connection;
-  next();
-});
 
 // Define API routes
 app.use('/api', router);

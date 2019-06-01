@@ -16,7 +16,7 @@
     position: relative;
     width: 350px;
     max-width: 80%;
-    height: 150px;
+    height: 100px;
     margin: 45px auto;
     border: 2px dashed rgba(black, 0.5);
     
@@ -49,15 +49,18 @@
 
         & + span {
           font-size: 12px;
+          margin-left: 5px;
         }
       }
 
       .filename {
-        margin-top: 30px;
+        @include text-overflow(ellipsis);
         font-weight: bold;
         display: block;
+        margin: 15px auto 0;
         text-transform: uppercase;
         font-size: 11px;
+        max-width: 80%;
       }
     }
   }
