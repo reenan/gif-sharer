@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import PasswordMask from 'react-password-mask';
 import DatePicker from 'react-datepicker'
 import Toggle from 'react-toggle'
 
 import '../../../node_modules/react-toggle/style.css';
 import '../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
 
-import { Modal, Button, Loader } from '../';
+import { Modal, Button, Loader, PasswordField } from '../';
 import './GIFUpload.scss';
 
 class GIFUpload extends Component {
@@ -55,7 +54,7 @@ class GIFUpload extends Component {
 			loading: false,
 			uploadedID: GIFID,
 			modaIsOpen: true
-		});	
+		});
 	}
 
 	changeIsPrivate = (e) => {
@@ -101,10 +100,9 @@ class GIFUpload extends Component {
 			isValid = false;
 		}
 
-		console.log(this.state);
 		return isValid;
 	}
-	
+
 	render() {
 		const {
       isPrivate,
@@ -118,13 +116,12 @@ class GIFUpload extends Component {
 
 		const canUpload = this.canUpload();
 
-		console.log(canUpload)
 		return (
 			<div className='gif-upload-wrapper'>
 
 				{
 					loading ?
-					<Loader /> : null
+						<Loader /> : null
 				}
 
 				<Modal className='gif-details-modal' open={modaIsOpen}>
@@ -147,22 +144,10 @@ class GIFUpload extends Component {
 							onChange={this.changeIsPrivate} />
 					</label>
 				</div>
-					
+
 				{
 					isPrivate ?
-						<div className='password-wrapper'>  
-							<label>
-								<span>Password:</span>
-								<PasswordMask
-									value={password}
-									maxLength={50}
-									onChange={this.changePassword}
-									inputClassName='input-password'
-									buttonClassName='btn-show-hide'
-									useVendorStyles={false}
-								/>
-							</label>
-						</div> : null
+						<PasswordField onChange={this.changePassword} value={password} /> : null
 				}
 
 				<div className='expiration-wrapper'>
@@ -174,10 +159,10 @@ class GIFUpload extends Component {
 							onChange={this.changeHasExpirationDate} />
 					</label>
 				</div>
-					
+
 				{
 					hasExpirationDate ?
-						<div className='expiration-date-wrapper'>  
+						<div className='expiration-date-wrapper'>
 							<label>
 								<span>Expiration date:</span>
 								<DatePicker fixedHeight selected={expirationDate}
@@ -191,7 +176,6 @@ class GIFUpload extends Component {
 				</Button>
 			</div>
 		);
-
 	}
 }
 

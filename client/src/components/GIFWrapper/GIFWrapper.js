@@ -36,7 +36,7 @@ export default class GIFWrapper extends Component {
   render() {
     return (
       <div className='gif-wrapper'>
-        <img src={this.props.GIF.content} />
+        <img alt='Uploaded GIF' src={this.props.GIF.content} />
 
         <GIFUpload upload={this.uploadGIF} />
       </div>

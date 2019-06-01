@@ -1,6 +1,7 @@
 const { Router } = require('express');
 const router = new Router()
 const { Op } = require('sequelize')
+const fetch = require('fetch-base64');
 
 const { uploadGIF, createGIFFile } = require('../helpers');
 const { GIF } = require('../models');
@@ -34,8 +35,9 @@ router.get('/', async (_req, res) => {
 
 router.get('/:id', async (req, res) => {
   const { id } = req.params;
+  const { password } = req.headers;
 
-  const result = await GIF.findOne({
+  const result = await GIF.unscoped().findOne({
     where: {
       id: id,
       expirationDate: {
@@ -47,7 +49,23 @@ router.get('/:id', async (req, res) => {
     }
   });
 
-  res.json(result)
+  if (result == null) {
+    res.sendStatus(404);
+    return;
+  }
+
+  const { isPrivate, password: GIFPassword } = result.dataValues;
+
+  if (isPrivate && password !== GIFPassword) {
+    res.sendStatus(401);
+    return;
+  }
+
+  // Fetch base64 from firebase
+  fetch.remote(result.dataValues.url).then((data) => {
+
+    res.json({result, base64: data[1]});
+  }).catch(() => res.sendStatus(500));
 });
 
 

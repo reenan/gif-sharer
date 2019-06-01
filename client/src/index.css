@@ -4,6 +4,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #cedfef;
 }
 
 code {
@@ -24,4 +25,11 @@ ol, ul {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.title {
+  font-size: 33px;
+  font-weight: bold;
+  margin: 30px 0;
+  text-align: center;
 }

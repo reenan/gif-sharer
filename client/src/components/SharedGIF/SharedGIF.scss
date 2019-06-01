@@ -1,0 +1,27 @@
+.shared-gif-wrapper {
+  text-align: center;
+  width: 600px;
+  max-width: 90%;
+  margin: auto;
+
+  a.download-button {
+    display: block;
+    margin-top: 15px;
+    text-decoration: none;
+  }
+
+  .share-a-gif {
+    display: block;
+    margin-top: 15px;
+  }
+
+  .password-wrapper {
+    margin: 30px 0;
+  }
+
+  .invalid-password {
+    color: red;
+    margin: 15px 0;
+  }
+
+}

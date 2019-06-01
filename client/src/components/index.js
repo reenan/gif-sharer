@@ -6,6 +6,7 @@ import Modal from './Modal/Modal';
 import GIFUpload from './GIFUpload/GIFUpload';
 import Button from './Button/Button';
 import Loader from './Loader/Loader';
+import PasswordField from './PasswordField/PasswordField';
 
 export {
   Uploader,
@@ -16,4 +17,5 @@ export {
   GIFUpload,
   Button,
   Loader,
+  PasswordField,
 }

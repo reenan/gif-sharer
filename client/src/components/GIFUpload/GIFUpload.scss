@@ -28,46 +28,6 @@
     }
   }
 
-  .password-wrapper {
-    font-size: 14px;
-    margin: 15px 0;
-
-    span {
-      margin-right: 5px;
-    }
-
-    div, span {
-      @include vertical-align(middle);
-    }
-
-    div {
-      @include transition(border-color 400ms);
-      position: relative;
-      border: 1px solid rgba(gray, 0.5);
-      padding-right: 40px;
-      border-radius: 15px;
-
-      .input-password {
-        height: 30px;
-        outline: none;
-        border: none;
-        border-radius: 15px;
-        padding: 15px;
-        box-sizing: border-box;
-      }
-      
-      .btn-show-hide {
-        position: absolute;
-        top: 7px;
-        right: 15px;
-        color: black;
-        text-decoration: none;
-        font-size: 11px;
-        text-transform: uppercase;
-      }
-    }
-  }
-
   .expiration-date-wrapper {
     font-size: 14px;
     margin: 15px 0;

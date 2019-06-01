@@ -16,7 +16,7 @@ export default class Modal extends Component {
 	}
 
 	render() {
-		const { overlay, open, children, className } = this.props;
+		const { open, children, className } = this.props;
 
 		return (
 			<div className={`${className} modal ${open ? 'open' : ''}`}>

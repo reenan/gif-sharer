@@ -10,7 +10,8 @@
 }
 
 .loader-wrapper {
-	@include absolute-fill();
+	@include position-fill();
+	position: fixed;
 	background: rgba(black, 0.5);
 	z-index: 3;
 	

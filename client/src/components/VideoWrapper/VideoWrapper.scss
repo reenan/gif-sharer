@@ -11,6 +11,18 @@
 
   .rc-slider {
     margin-top: 15px;
+
+    .rc-slider-rail {
+      background-color: #b9b3b3;
+    }
+
+    .rc-slider-track {
+      background-color: darken(#6bbcff, 15);
+    }
+
+    .rc-slider-handle {
+      border-color: darken(#6bbcff, 15);
+    }
   }
 
   .duration {

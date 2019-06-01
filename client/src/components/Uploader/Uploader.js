@@ -40,9 +40,8 @@ export default class Uploader extends Component {
 
     return (
       <div className='uploader'>
-        <p className='title'>Share GIFS!</p>
         
-        <div className='input-wrapper'>
+        <div className={`${!file ? 'empty' : ''} input-wrapper`} >
           <input accept='.mp4,.gif' type='file' onChange={this.onMediaChange} />
           <div className='file-button'>
             <p>Click to upload</p>
@@ -53,8 +52,6 @@ export default class Uploader extends Component {
             </span>
           </div>
         </div>
-        
-
 
         {
           file && file.content ?
