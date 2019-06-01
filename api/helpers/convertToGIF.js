@@ -5,7 +5,7 @@ const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
 
-const convertToGIF = (base64Data) => {
+const convertToGIF = (base64Data, start, duration) => {
   return new Promise((resolve, reject) => {
     // Clean base64 data
     base64Data = base64Data.replace(/^data:(.*?);base64,/, "");
@@ -26,8 +26,10 @@ const convertToGIF = (base64Data) => {
           if (err) reject(err);
 
           //.videoCodec('libx264').audioCodec('libmp3lame').size('320x240')
-          ffmpeg(filePath)//.outputOption("-vf", "scale=320:-1:flags=lanczos,fps=15,startTime=2,duration=1")
-            .setDuration(2)
+          //.outputOption("-vf", "scale=320:-1:flags=lanczos,fps=15,startTime=2,duration=1")
+          
+          // Generate GIF from video, cropping to start and duration.
+          ffmpeg(filePath).setStartTime(start).setDuration(duration)
             .on('error', (err) => {
               if (err) reject(err);
             })

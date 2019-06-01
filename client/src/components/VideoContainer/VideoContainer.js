@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 
+
 import { Range, getTrackBackground } from 'react-range';
 
 import './VideoContainer.scss';
@@ -43,7 +44,7 @@ export default class VideoContainer extends Component {
   }
 
   cropVideo = () => {
-    fetch('http://localhost:7070/api/gif', {
+    fetch('http://localhost:7070/api/video', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -51,8 +52,8 @@ export default class VideoContainer extends Component {
       },
       body: JSON.stringify({
         video: this.props.file.content,
-        trimValues: this.state.trimValues,
-        duration: this.video.duration,
+        startPosition: this.state.trimValues[0],
+        duration: this.getCroppedVideoDuration(),
       })
     }).then((data) => {
       console.log('then: ', data);
@@ -62,12 +63,12 @@ export default class VideoContainer extends Component {
   }
 
   getCroppedVideoDuration = () => {
-    return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2) + 's';
+    return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2);
   }
 
   render() {
     const { trimValues } = this.state;
-
+    const croppedVideoDuration = this.getCroppedVideoDuration();
     return (
       <div className='video-container'>
         <video ref={video => this.video = video}
@@ -76,17 +77,22 @@ export default class VideoContainer extends Component {
 
         {
           this.video ?
-            <div>
+            <div className='crop-wrapper'>
               <Range values={trimValues} step={0.01} min={0}
                 max={this.video.duration} onChange={this.onChangeRange}
                 renderTrack={Track.bind(this, trimValues, this.video.duration)} renderThumb={Thumb}
               />
 
-              <p className='duration'>CROPPED VIDEO DURATION: {this.getCroppedVideoDuration()}</p>
+              <span className={`duration ${croppedVideoDuration > 5 ? 'red' : ''}`}>Video Duration: {croppedVideoDuration}s</span>
+              { croppedVideoDuration > 5 ?
+                  <span className='length-warning'>Please, crop your video to a max of 15 seconds</span> : null
+              }
             </div> : null
         }
 
-        <button onClick={this.cropVideo}>Send</button>
+        <div className='upload-button' onClick={this.cropVideo}>
+          <p>Share</p>
+        </div>
 
       </div>
     )
@@ -99,8 +105,8 @@ const Thumb = ({ props, isDragged }) => (
     {...props}
     style={{
       ...props.style,
-      height: '30px',
-      width: '30px',
+      height: '25px',
+      width: '25px',
       borderRadius: '100%',
       backgroundColor: '#FFF',
       display: 'flex',
@@ -111,8 +117,8 @@ const Thumb = ({ props, isDragged }) => (
   >
     <div
       style={{
-        height: '10px',
-        width: '10px',
+        height: '8px',
+        width: '8px',
         borderRadius: '100%',
         backgroundColor: isDragged ? '#548BF4' : '#CCC'
       }}

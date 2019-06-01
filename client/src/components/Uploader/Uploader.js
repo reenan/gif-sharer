@@ -37,8 +37,22 @@ export default class Uploader extends Component {
 
     return (
       <div className='uploader'>
-        <input type='file' onChange={this.onMediaChange} />
+        <p className='title'>Share GIFS!</p>
         
+        <div className='input-wrapper'>
+          <input type='file' onChange={this.onMediaChange} />
+          <div className='button'>
+            <p>Click to upload</p>
+            <span>or, drag and drop</span>
+
+            <span className='filename'>
+              Selected: { file ? file.name : 'None' }            
+            </span>
+          </div>
+        </div>
+        
+
+
         {
           file && file.content ?
             (

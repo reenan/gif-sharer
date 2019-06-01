@@ -1,0 +1,24 @@
+@mixin absolute-fill($distance: 0px) {
+	position: absolute;
+	@include position-fill($distance);
+}
+
+@mixin position-fill($distance: 0px) {
+	top: $distance;
+	bottom: $distance;
+	left: $distance;
+	right: $distance;
+}
+
+@mixin box-shadow($size, $color) {
+	-moz-box-shadow: $size $color;
+	-webkit-box-shadow: $size $color;
+	box-shadow: $size $color;
+}
+
+@mixin transition($args...) {
+	-webkit-transition: $args;
+	-moz-transition: $args;
+	-o-transition: $args;
+	transition: $args;
+}
