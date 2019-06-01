@@ -63,5 +63,4 @@ router.get('/:id', async (req, res) => {
   }).catch(() => res.sendStatus(500));
 });
 
-
 module.exports = router
