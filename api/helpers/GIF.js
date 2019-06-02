@@ -1,9 +1,11 @@
 const fs = require('fs');
 const tmp = require('tmp');
 
+// Need to specify local ffmpeg installation path to module
 const ffmpegInstaller = require('@ffmpeg-installer/ffmpeg');
 const ffmpeg = require('fluent-ffmpeg');
 ffmpeg.setFfmpegPath(ffmpegInstaller.path);
+
 
 const convertToGIF = (video, startTime, duration) => {
   return new Promise((resolve, reject) => {
@@ -21,6 +23,8 @@ const convertToGIF = (video, startTime, duration) => {
         const GIFTempFile = await createGIFTempFile();
 
         console.log('Will convert video to GIF');
+
+        // Use FFmpeg functions to convert video to trimmed GIF
         ffmpeg(filePath).setStartTime(startTime).setDuration(duration)
         .on('error', (err) => {
           if (err) reject(err);
@@ -37,7 +41,6 @@ const convertToGIF = (video, startTime, duration) => {
 
 const createGIFTempFile = () => {
   return new Promise((resolve, reject) => {
-
     tmp.tmpName({ postfix: '.gif' }, (err, newPath) => {
       if (err) reject(err);
 
@@ -48,9 +51,7 @@ const createGIFTempFile = () => {
 
 const createGIFFile = (content) => {
   return new Promise(async (resolve, reject) => {
-
     const tempFile = await createGIFTempFile();
-
     content = cleanBase64(content);
 
     fs.writeFile(tempFile, content, 'base64', async (err) => {
@@ -62,7 +63,7 @@ const createGIFFile = (content) => {
 }
 
 const cleanBase64 = (content) => {
-  let cleaned = content.replace(/^data:(.*?);base64,/, "");
+  let cleaned = content.replace(/^data:(.*?);base64,/, '');
   cleaned = cleaned.replace(/ /g, '+');
 
   return cleaned;

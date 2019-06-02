@@ -1,4 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
+
+  // Define model schema
   const GIFSchema = {
     id: {
       type: DataTypes.UUID,
@@ -11,6 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     expiresAt: DataTypes.DATE,
   };
 
+  // Define model customization
   const GIFOptions = {
     defaultScope: {
       attributes: { exclude: ['password'] },
@@ -19,7 +22,6 @@ module.exports = (sequelize, DataTypes) => {
     timestamps: true,
     updatedAt: false,
   };
-
 
   return sequelize.define('GIF', GIFSchema, GIFOptions);
 }

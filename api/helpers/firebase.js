@@ -1,9 +1,10 @@
-const admin = require("firebase-admin");
+const admin = require('firebase-admin');
 const uuid4 = require('uuid4');
 
 const projectID = 'gif-sharer';
 
-// For some reason, heroku needs JSON.parse, local throws SyntaxError with same .env value ¯\_(ツ)_/¯
+// For some reason, heroku needs JSON.parse,
+// local throws SyntaxError with same .env value ¯\_(ツ)_/¯
 let privateKey;
 
 try {
