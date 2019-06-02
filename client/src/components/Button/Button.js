@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 
 import './Button.scss';
 
-
 export default class Button extends Component {
 
 	static propTypes = {

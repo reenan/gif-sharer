@@ -5,7 +5,6 @@ import { Button, Loader, PasswordField, Modal } from 'components';
 
 import './SharedGIF.scss';
 
-
 class SharedGIF extends Component {
 
   constructor(props) {

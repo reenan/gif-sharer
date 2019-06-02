@@ -29,9 +29,7 @@ export default class Modal extends Component {
 
 		return (
 			<div className={`${className} modal ${open ? 'open' : ''}`}>
-
 				<div onClick={this.clickOnOverlay} className={`overlay`} />
-
 				<div className='modal-inner'>
 					<div className='modal-content-area'>
 						{children}

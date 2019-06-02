@@ -89,7 +89,6 @@ export default class VideoWrapper extends Component {
     })
   }
 
-  // Utility functions
   getCroppedVideoDuration = () => {
     return Math.abs(this.state.trimValues[1] - this.state.trimValues[0]).toFixed(2);
   }

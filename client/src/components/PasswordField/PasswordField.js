@@ -4,7 +4,6 @@ import PasswordMask from 'react-password-mask';
 
 import './PasswordField.scss';
 
-
 export default class PasswordField extends Component {
 
 	static propTypes = {
