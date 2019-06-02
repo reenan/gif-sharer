@@ -12,7 +12,7 @@ NODE_ENV=src
 REACT_APP_API_URL=http://localhost:7070/api
 ```
 
-2. Define those variables for `api/.env`:
+2. Define these variables for `api/.env`:
 ```
 DB_PASS=[Database password]
 DB_USER=[Database username]
