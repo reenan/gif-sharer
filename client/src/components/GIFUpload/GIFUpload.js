@@ -164,7 +164,7 @@ class GIFUpload extends Component {
 						<div className='expires-at-wrapper'>
 							<label>
 								<span>Expiration date:</span>
-								<DatePicker fixedHeight selected={expiresAt} dateFormat="dd/MM/yyyy"
+								<DatePicker fixedHeight selected={expiresAt} dateFormat="MM/dd/yyyy"
 									onChange={this.changeExpirationDate} />
 							</label>
 						</div> : null

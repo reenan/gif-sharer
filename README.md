@@ -25,5 +25,6 @@ FIREBASE_CLIENT_ID=[Firebase client ID
 FIREBASE_CLIENT_CERT_URL[Firebase client cert URL]
 FIREBASE_AUTH_PROVIDER_CERT_URL=[Firebase auth provider cert URL]
 ```
-5. Run `npm run dev` inside `api`
-6. Run `npm start` inside `client`
+5. Install [FFmpeg](https://ffmpeg.org/)
+6. Run `npm run dev` inside `api`
+7. Run `npm start` inside `client`
