@@ -1,17 +1,17 @@
-@import '../../_mixins.scss';
+@import '_mixins.scss';
 
 .button {
-	@include transition(background 300ms);
+	@include transition(background-color 300ms);
 	margin: auto;
 	display: inline-block;
 	text-align: center;
 	color: white;
 	height: 40px;
+	width: 180px;
 	border-radius: 40px;
 	line-height: 40px;
-	width: 180px;
 	cursor: pointer;
-	
+
 	&.default {
 		background-color: #6bbcff;
 		&:hover {

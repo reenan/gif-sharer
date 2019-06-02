@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import PasswordMask from 'react-password-mask';
+
 import './PasswordField.scss';
 
 export default class PasswordField extends Component {

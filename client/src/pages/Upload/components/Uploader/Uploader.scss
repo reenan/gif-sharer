@@ -1,6 +1,6 @@
-@import '../../_mixins.scss';
+@import '_mixins.scss';
 
-.gif-upload-wrapper {
+.uploader-wrapper {
   width: 600px;
   max-width: 90%;
   margin: auto;
@@ -16,7 +16,7 @@
   .protection-wrapper, .expiration-wrapper {
     font-size: 14px;
     margin: 15px 0;
-    
+
     label, div {
       cursor: pointer;
       @include vertical-align(middle);

@@ -1,4 +1,4 @@
-@import '../../_mixins.scss';
+@import '_mixins.scss';
 
 @keyframes loaderAnimation {
   0% {
@@ -14,7 +14,7 @@
 	position: fixed;
 	background: rgba(black, 0.5);
 	z-index: 3;
-	
+
 	.loader {
 		display: inline-block;
 		position: relative;

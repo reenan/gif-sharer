@@ -8,6 +8,7 @@ Demo available [here](http://gif-sharer.surge.sh)
 
 1. Create one `.env` file inside `client` with the following:
 ```
+NODE_ENV=src
 REACT_APP_API_URL=http://localhost:7070/api
 ```
 

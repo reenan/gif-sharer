@@ -3,14 +3,14 @@ import { NavLink, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker'
 import Toggle from 'react-toggle'
+import 'react-toggle/style.css';
+import 'react-datepicker/src/stylesheets/datepicker.scss';
 
-import '../../../node_modules/react-toggle/style.css';
-import '../../../node_modules/react-datepicker/src/stylesheets/datepicker.scss';
+import { Modal, Button, Loader, PasswordField } from 'components';
 
-import { Modal, Button, Loader, PasswordField } from '../';
-import './GIFUpload.scss';
+import './Uploader.scss';
 
-class GIFUpload extends Component {
+class Uploader extends Component {
 	static propTypes = {
 		upload: PropTypes.func.isRequired,
 		enableUpload: PropTypes.bool,
@@ -81,7 +81,6 @@ class GIFUpload extends Component {
     })
   }
 
-
   closeModal = () => {
     this.setState({
       modaIsOpen: false
@@ -116,7 +115,7 @@ class GIFUpload extends Component {
 		const canUpload = this.canUpload();
 
 		return (
-			<div className='gif-upload-wrapper'>
+			<div className='uploader-wrapper'>
 
 				{
 					loading ?
@@ -178,4 +177,4 @@ class GIFUpload extends Component {
 	}
 }
 
-export default withRouter(GIFUpload);
+export default withRouter(Uploader);

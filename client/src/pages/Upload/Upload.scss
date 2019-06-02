@@ -1,6 +1,6 @@
-@import '../../_mixins.scss';
+@import '_mixins.scss';
 
-.uploader {
+.upload {
   text-align: center;
   padding-bottom: 45px;
 
@@ -68,5 +68,4 @@
       }
     }
   }
-
 }

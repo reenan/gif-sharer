@@ -1,11 +1,10 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-
 import Range from 'rc-slider/lib/Range';
 import 'rc-slider/assets/index.css';
 
-import { GIFUpload } from '../';
+import { Uploader } from '../';
 
 import './VideoWrapper.scss';
 
@@ -27,6 +26,7 @@ export default class VideoWrapper extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({
+        // Sometimes video will not be ready yet, so initial will be 5
         trimValues: [0, isNaN(this.video.duration) ? 5 : this.video.duration]
       });
 
@@ -83,6 +83,7 @@ export default class VideoWrapper extends Component {
       }).then(async (data) => {
         const { id } = await data.json();
         resolve(id);
+
       }).catch((err) => {
         reject(err);
       });
@@ -127,7 +128,7 @@ export default class VideoWrapper extends Component {
             </div> : null
         }
 
-        <GIFUpload enableUpload={canConvertToGIF} upload={this.cropVideo} />
+        <Uploader enableUpload={canConvertToGIF} upload={this.cropVideo} />
 
       </div>
     )

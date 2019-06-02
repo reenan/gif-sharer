@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 
-import { GIFWrapper, VideoWrapper } from '../';
-import './Uploader.scss';
+import { GIFWrapper, VideoWrapper } from './components';
 
-export default class Uploader extends Component {
+import './Upload.scss';
+
+export default class Upload extends Component {
 
   constructor(props) {
     super(props);
@@ -19,15 +20,17 @@ export default class Uploader extends Component {
 
     this.setState({ file }, () => {
 
+      // Read new uploaded file data
       if (file != null) {
         const reader = new FileReader();
-    
+
         reader.onload = this.defineFile;
         reader.readAsDataURL(file);
       }
     })
   }
 
+  // Define file and file content
   defineFile = (e) => {
     let { file } = this.state;
     file.content = e.target.result;
@@ -39,8 +42,8 @@ export default class Uploader extends Component {
     const { file } = this.state;
 
     return (
-      <div className='uploader'>
-        
+      <div className='upload'>
+
         <div className={`${!file ? 'empty' : ''} input-wrapper`} >
           <input accept='.mp4,.gif' type='file' onChange={this.onMediaChange} />
           <div className='file-button'>
@@ -48,7 +51,7 @@ export default class Uploader extends Component {
             <span>or, drag and drop (.mp4 or .gif)</span>
 
             <span className='filename'>
-              Selected: { file ? file.name : 'None' }            
+              Selected: { file ? file.name : 'None' }
             </span>
           </div>
         </div>
@@ -56,7 +59,7 @@ export default class Uploader extends Component {
         {
           file && file.content ?
             (
-              file.type.indexOf('video') !== -1 ? 
+              file.type.indexOf('video') !== -1 ?
                 <VideoWrapper video={file} /> : <GIFWrapper GIF={file} />
             ) : null
         }

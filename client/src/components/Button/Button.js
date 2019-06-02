@@ -12,9 +12,9 @@ export default class Button extends Component {
 	}
 
 	static defaultProps = {
+		onClick: () => {},
 		type: 'default',
 		disabled: false,
-		onClick: () => {}
 	}
 
 	render() {

@@ -1,8 +1,15 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import './Modal.scss';
 
 export default class Modal extends Component {
+	static propTypes = {
+		closeWithClickOnOverlay: PropTypes.bool,
+		open: PropTypes.bool,
+		className: PropTypes.string,
+	}
+
 	static defaultProps = {
 		closeWithClickOnOverlay: false,
 		open: false,

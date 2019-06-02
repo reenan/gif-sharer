@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { GIFUpload } from '../';
+import { Uploader } from '../';
+
 import './GIFWrapper.scss';
 
 export default class GIFWrapper extends Component {
@@ -28,6 +29,7 @@ export default class GIFWrapper extends Component {
       }).then(async (data) => {
         const { id } = await data.json();
         resolve(id);
+
       }).catch((err) => {
         reject(err);
       });
@@ -39,7 +41,7 @@ export default class GIFWrapper extends Component {
       <div className='gif-wrapper'>
         <img alt='Uploaded GIF' src={this.props.GIF.content} />
 
-        <GIFUpload upload={this.uploadGIF} />
+        <Uploader upload={this.uploadGIF} />
       </div>
     )
   }
