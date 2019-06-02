@@ -27,7 +27,7 @@ class GIFUpload extends Component {
 			isPrivate: false,
 			password: '',
 			hasExpirationDate: false,
-			expirationDate: null,
+			expiresAt: null,
       loading: false,
       uploadedID: null,
       modaIsOpen: false,
@@ -41,13 +41,13 @@ class GIFUpload extends Component {
 			isPrivate,
 			password,
 			hasExpirationDate,
-			expirationDate,
+			expiresAt,
 		} = this.state;
 
 		const GIFID = await this.props.upload(
 			isPrivate,
 			isPrivate ? password : null,
-			hasExpirationDate ? expirationDate : null
+			hasExpirationDate ? expiresAt : null
 		);
 
 		this.setState({
@@ -76,9 +76,8 @@ class GIFUpload extends Component {
   }
 
   changeExpirationDate = (value) => {
-    console.log(value)
     this.setState({
-      expirationDate: value
+      expiresAt: value
     })
   }
 
@@ -107,7 +106,7 @@ class GIFUpload extends Component {
 		const {
       isPrivate,
       hasExpirationDate,
-      expirationDate,
+      expiresAt,
       password,
       loading,
       modaIsOpen,
@@ -162,10 +161,10 @@ class GIFUpload extends Component {
 
 				{
 					hasExpirationDate ?
-						<div className='expiration-date-wrapper'>
+						<div className='expires-at-wrapper'>
 							<label>
 								<span>Expiration date:</span>
-								<DatePicker fixedHeight selected={expirationDate}
+								<DatePicker fixedHeight selected={expiresAt} dateFormat="dd/MM/yyyy"
 									onChange={this.changeExpirationDate} />
 							</label>
 						</div> : null

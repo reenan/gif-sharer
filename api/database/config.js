@@ -6,6 +6,5 @@ module.exports = {
   dialect: 'mysql',
   define: {
     freezeTableName: true,
-    timestamps: false,
   }
 }

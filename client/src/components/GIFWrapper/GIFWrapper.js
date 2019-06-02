@@ -11,9 +11,10 @@ export default class GIFWrapper extends Component {
   }
 
    // Request to save a GIF
-   uploadGIF = (isPrivate, password, expirationDate) => {
+   uploadGIF = (isPrivate, password, expiresAt) => {
+
     return new Promise((resolve, reject) => {
-      fetch('https://gif-sharer-api.herokuapp.com/api/GIF', {
+      fetch(`${process.env.REACT_APP_API_URL}/GIF`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -22,7 +23,7 @@ export default class GIFWrapper extends Component {
           GIF: this.props.GIF.content,
           isPrivate: isPrivate,
           password: password,
-          expirationDate: expirationDate,
+          expiresAt: expiresAt,
         })
       }).then(async (data) => {
         const { id } = await data.json();

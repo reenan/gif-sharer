@@ -3,13 +3,22 @@ const uuid4 = require('uuid4');
 
 const projectID = 'gif-sharer';
 
+// For some reason, heroku needs JSON.parse, local throws SyntaxError with same .env value ¯\_(ツ)_/¯
+let privateKey;
+
+try {
+  privateKey = JSON.parse(process.env.FIREBASE_PRIVATE_KEY);
+} catch(err) {
+  privateKey = process.env.FIREBASE_PRIVATE_KEY;
+}
+
 // Setup firebase admin
 admin.initializeApp({
   credential: admin.credential.cert({
     type: 'service_account',
     project_id: projectID,
     private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
-    private_key: JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
+    private_key: privateKey,
     client_email: process.env.FIREBASE_CLIENT_EMAIL,
     client_id: process.env.FIREBASE_CLIENT_ID,
     auth_provider_x509_cert_url: process.env.FIREBASE_AUTH_PROVIDER_CERT_URL,

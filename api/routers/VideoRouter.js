@@ -6,7 +6,7 @@ const { uploadGIF, convertToGIF } = require('../helpers');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
-  const { video, startTime, duration, isPrivate, password, expirationDate } = req.body;
+  const { video, startTime, duration, isPrivate, password, expiresAt } = req.body;
 
   if (isPrivate && !password) {
     res.status(400).send('Password is required for private GIFs');
@@ -25,7 +25,7 @@ router.post('/', async (req, res) => {
     url: GIFFirebaseURL,
     isPrivate: isPrivate,
     password: password,
-    expirationDate: expirationDate
+    expiresAt: expiresAt
   });
 
   res.status(201).send({ id: GIFObject.dataValues.id });

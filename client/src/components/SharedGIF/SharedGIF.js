@@ -18,7 +18,7 @@ class SharedGIF extends Component {
       loading: true,
       invalidPassword: false,
       password: '',
-      badStatus: false
+      badStatusMessage: false
     }
   }
 
@@ -31,15 +31,17 @@ class SharedGIF extends Component {
 
     this.setState({loading: true})
 
-    fetch(`https://gif-sharer-api.herokuapp.com/api/gif/${params.id}`, {
+    fetch(`${process.env.REACT_APP_API_URL}/gif/${params.id}`, {
       headers: {
-        password: this.state.password
+        password: this.state.password,
       }
     }).then(async (data) => {
 
-      if (data.status === 410 || data.status === 404) {  
+      if (data.status === 410 || data.status === 404) {
+        const { message } = await data.json();
+
         this.setState({
-          badStatus: data.status,
+          badStatusMessage: message,
           loading: false,
         });
 
@@ -56,12 +58,12 @@ class SharedGIF extends Component {
         return;
       }
 
-      data = await data.json();
+      if (data.status === 200) {
+         const { result, base64 } = await data.json();
+         const { url, id } = result;
 
-      const { result, base64 } = data;//await data.json();
-      const { url, id } = result;
-
-      this.setState({ url, id, base64, isPrivate: false, loading: false, invalidPassword: false });
+        this.setState({ url, id, base64, isPrivate: false, loading: false, invalidPassword: false });
+      }
     })
   }
 
@@ -72,20 +74,8 @@ class SharedGIF extends Component {
     })
   }
 
-  getBadStatusMessage = () => {
-    const { badStatus } = this.state;
-
-    switch (badStatus) {
-      case 404:
-        return 'Looks like this file does not exists.';
-      case 410:
-      default:
-        return `Looks like this file's experation day passed.`
-    }
-  }
-
   render() {
-    const { url, id, base64, loading, isPrivate, password, invalidPassword, badStatus } = this.state;
+    const { url, id, base64, loading, isPrivate, password, invalidPassword, badStatusMessage } = this.state;
 
     return (
       <div className='shared-gif-wrapper'>
@@ -103,19 +93,19 @@ class SharedGIF extends Component {
                   {
                     invalidPassword ? <p className='invalid-password'>Invalid password</p> : null
                   }
-                  
+
                   <Button onClick={this.loadGIF}>
                     <span>Request</span>
                   </Button>
                 </div>
               ) : null
             }
-            
+
             {
               base64 ? (
                 <div>
                   <img ref={(GIF) => this.GIF = GIF} alt='Shared GIF' src={url} />
-      
+
                   <a className='download-button' href={base64} download={`${id}.gif`}>
                     <Button>
                       <span>Download</span>
@@ -126,9 +116,9 @@ class SharedGIF extends Component {
             }
 
             {
-              badStatus ? (
+              badStatusMessage ? (
                 <Modal open={true}>
-                  <p>{this.getBadStatusMessage()}</p>
+                  <p>{badStatusMessage}</p>
 
                   <NavLink to='/' className='share-a-gif'>
                     <Button>
@@ -144,7 +134,7 @@ class SharedGIF extends Component {
                 </NavLink>
               )
             }
-            
+
           </div>
          )
         }

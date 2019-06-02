@@ -8,14 +8,18 @@ module.exports = (sequelize, DataTypes) => {
     url: DataTypes.STRING,
     isPrivate: DataTypes.BOOLEAN,
     password: DataTypes.STRING,
-    expirationDate: DataTypes.DATE,
+    expiresAt: DataTypes.DATE,
   };
 
-  const GIFScopes = {
+  const GIFOptions = {
     defaultScope: {
       attributes: { exclude: ['password'] },
-    }
+    },
+
+    timestamps: true,
+    updatedAt: false,
   };
 
-  return sequelize.define('GIF', GIFSchema, GIFScopes);
+
+  return sequelize.define('GIF', GIFSchema, GIFOptions);
 }

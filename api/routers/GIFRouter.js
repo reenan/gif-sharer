@@ -6,8 +6,7 @@ const { uploadGIF, createGIFFile } = require('../helpers');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
-  console.log('got to route');
-  const { GIF: GIFData, isPrivate, password, expirationDate } = req.body;
+  const { GIF: GIFData, isPrivate, password, expiresAt } = req.body;
 
   if (isPrivate && !password) {
     res.status(400).send('Password is required for private GIFs');
@@ -21,7 +20,7 @@ router.post('/', async (req, res) => {
     url: GIFFirebaseURL,
     isPrivate: isPrivate,
     password: password,
-    expirationDate: expirationDate
+    expiresAt: expiresAt
   });
 
   res.status(201).send({ id: GIFObject.dataValues.id });
@@ -38,19 +37,25 @@ router.get('/:id', async (req, res) => {
   const { password } = req.headers;
 
   const result = await GIF.unscoped().findByPk(id);
-  
+
   if (result == null) {
-    res.sendStatus(404);
+    const message = 'Requested GIF does not exists'
+
+    res.status(404).send({ message });
     return;
   }
 
-  if (result.dataValues.expirationDate && result.dataValues.expirationDate < new Date()) {
-    res.sendStatus(410);
+  const { isPrivate, expiresAt, password: GIFPassword } = result.dataValues;
+
+  // Handle expiration checking
+  if (expiresAt && expiresAt < new Date()) {
+    const message = `This GIF expired on ${new Date(expiresAt).toLocaleDateString()}`
+
+    res.status(410).send({ message });
     return;
   }
-  
-  const { isPrivate, password: GIFPassword } = result.dataValues;
 
+  // Handle private checking
   if (isPrivate && password !== GIFPassword) {
     res.sendStatus(401);
     return;

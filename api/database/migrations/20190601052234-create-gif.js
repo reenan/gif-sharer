@@ -19,8 +19,12 @@ module.exports = {
         allowNull: true,
         type: DataTypes.STRING,
       },
-      expirationDate: {
+      expiresAt: {
         allowNull: true,
+        type: DataTypes.DATE,
+      },
+      createdAt: {
+        allowNull: false,
         type: DataTypes.DATE,
       },
     });
