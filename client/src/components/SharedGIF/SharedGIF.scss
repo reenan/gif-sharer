@@ -4,15 +4,10 @@
   max-width: 90%;
   margin: auto;
 
-  a.download-button {
-    display: block;
+  a.download-button, .share-a-gif {
+    display: inline-block;
     margin-top: 15px;
     text-decoration: none;
-  }
-
-  .share-a-gif {
-    display: block;
-    margin-top: 15px;
   }
 
   .password-wrapper {

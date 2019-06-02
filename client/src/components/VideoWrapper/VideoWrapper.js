@@ -27,7 +27,7 @@ export default class VideoWrapper extends Component {
   componentDidMount() {
     setTimeout(() => {
       this.setState({
-        trimValues: [0, this.video.duration]
+        trimValues: [0, isNaN(this.video.duration) ? 5 : this.video.duration]
       });
 
       this.startLoop();
@@ -114,7 +114,7 @@ export default class VideoWrapper extends Component {
           this.video ?
             <div className='crop-wrapper'>
 
-              <Range allowCross={false} defaultValue={trimValues} max={this.video.duration}
+              <Range allowCross={false} defaultValue={trimValues} max={isNaN(this.video.duration) ? 5 : this.video.duration}
                 onChange={this.onChangeRange} step={0.10} pushable={0.10} />
 
               <span className={`duration ${!canConvertToGIF ? 'red' : ''}`}>GIF Duration: {croppedVideoDuration}s</span>
