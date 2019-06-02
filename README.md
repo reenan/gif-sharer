@@ -34,6 +34,6 @@ FIREBASE_AUTH_PROVIDER_CERT_URL=[Firebase auth provider cert URL]
 
 #### Testing
 
-To run client unit tests:
+To run client unit tests ([why watchAll?](https://github.com/facebook/create-react-app/issues/6888)):
 ````
-$ (gif-sharer/client) npm run test [-- --coverage]
+$ (gif-sharer/client) npm run test [-- --coverage --watchAll=false] 
