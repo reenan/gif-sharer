@@ -6,13 +6,13 @@ Demo available [here](http://gif-sharer.surge.sh)
 
 #### How to run locally
 
-1. Create one `.env` file inside `client` with the following:
+1. Create `client/.env` file with the following:
 ```
 NODE_ENV=src
 REACT_APP_API_URL=http://localhost:7070/api
 ```
 
-2. Define those variables for `api/.env`:
+2. Create `api/.env` and define these variables:
 ```
 DB_PASS=[Database password]
 DB_USER=[Database username]
