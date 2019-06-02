@@ -31,7 +31,7 @@ class SharedGIF extends Component {
 
     this.setState({loading: true})
 
-    fetch(`https://gif-sharer-api.herokuapp.com/api/gif/${params.id}`, {
+    fetch(`https://gif-sharer-api.herokuapp.com:55147/api/gif/${params.id}`, {
       headers: {
         password: this.state.password
       }

@@ -66,7 +66,7 @@ export default class VideoWrapper extends Component {
   // Request to crop and save a video
   cropVideo = (isPrivate, password, expirationDate) => {
     return new Promise((resolve, reject) => {
-      fetch('https://gif-sharer-api.herokuapp.com/api/video', {
+      fetch('https://gif-sharer-api.herokuapp.com:55147/api/video', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

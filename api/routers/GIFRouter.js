@@ -6,6 +6,7 @@ const { uploadGIF, createGIFFile } = require('../helpers');
 const { GIF } = require('../models');
 
 router.post('/', async (req, res) => {
+  console.log('got to route');
   const { GIF: GIFData, isPrivate, password, expirationDate } = req.body;
 
   if (isPrivate && !password) {
