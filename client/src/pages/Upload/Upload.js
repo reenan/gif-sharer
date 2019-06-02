@@ -4,6 +4,7 @@ import { GIFWrapper, VideoWrapper } from './components';
 
 import './Upload.scss';
 
+
 export default class Upload extends Component {
 
   constructor(props) {

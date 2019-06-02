@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Uploader } from '../';
 
+
 import './GIFWrapper.scss';
 
 export default class GIFWrapper extends Component {

@@ -7,13 +7,15 @@ export default class Modal extends Component {
 	static propTypes = {
 		closeWithClickOnOverlay: PropTypes.bool,
 		open: PropTypes.bool,
+		close: PropTypes.func,
 		className: PropTypes.string,
 	}
 
 	static defaultProps = {
 		closeWithClickOnOverlay: false,
 		open: false,
-		className: ''
+		className: '',
+		close: () => {},
 	}
 
 	clickOnOverlay = () => {
