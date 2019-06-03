@@ -125,7 +125,7 @@ class SharedGIF extends Component {
             {
               base64 ? (
                 <div>
-                  <img ref={(GIF) => this.GIF = GIF} alt='Shared GIF' src={url} />
+                  <img ref={(GIF) => this.GIF = GIF} alt='Shared GIF' src={base64} />
 
                   <a className='download-button' href={base64} download={`${id}.gif`}>
                     <Button>
