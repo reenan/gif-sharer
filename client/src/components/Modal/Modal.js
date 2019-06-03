@@ -28,14 +28,15 @@ export default class Modal extends Component {
 		const { open, children, className } = this.props;
 
 		return (
-			<div className={`${className} modal ${open ? 'open' : ''}`}>
-				<div onClick={this.clickOnOverlay} className={`overlay`} />
-				<div className='modal-inner'>
-					<div className='modal-content-area'>
-						{children}
+			open ?
+				<div className={`${className} modal open`}>
+					<div onClick={this.clickOnOverlay} className={`overlay`} />
+					<div className='modal-inner'>
+						<div className='modal-content-area'>
+							{children}
+						</div>
 					</div>
-				</div>
-			</div>
+				</div> : null
 		);
 	}
 }

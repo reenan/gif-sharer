@@ -88,7 +88,6 @@ class SharedGIF extends Component {
 
   render() {
     const {
-      url,
       id,
       base64,
       loading,
@@ -115,8 +114,8 @@ class SharedGIF extends Component {
                     invalidPassword ? <p className='invalid-password'>Invalid password</p> : null
                   }
 
-                  <Button onClick={this.loadGIF}>
-                    <span>Request</span>
+                  <Button disabled={password.length === 0} onClick={this.loadGIF}>
+                    <span>Show me!</span>
                   </Button>
                 </div>
               ) : null

@@ -114,6 +114,8 @@ export default class VideoWrapper extends Component {
           this.video ?
             <div className='crop-wrapper'>
 
+              <p className='desc'>Use this bar to crop your video! You can create a GIF with a max of 5 seconds.</p>
+
               <Range allowCross={false} defaultValue={trimValues} max={isNaN(this.video.duration) ? 5 : this.video.duration}
                 onChange={this.onChangeRange} step={0.10} pushable={0.10} />
 

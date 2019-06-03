@@ -1,11 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { MemoryRouter } from 'react-router-dom';
+import sinon from 'sinon';
 
 import { shallow } from 'enzyme';
-
-import renderer from 'react-test-renderer';
-import sinon from 'sinon';
 
 import SharedGIF from './SharedGIF';
 
@@ -14,26 +10,15 @@ afterEach(() => {
   sinon.restore();
 });
 
-it('renders without crashing', () => {
-  const div = document.createElement('div');
-
-  ReactDOM.render(
-    <MemoryRouter>
-      <SharedGIF />
-    </MemoryRouter>, div);
-  ReactDOM.unmountComponentAtNode(div);
-});
-
 it('onChangePassword should update state password', () => {
   // Avoid rendering router elements, mock match prop.
-  let component = renderer.create(
+  let component = shallow(
     <SharedGIF.WrappedComponent match={{ params: { id : 'mock' } }} />
   );
 
-  let instance = component.getInstance();
-  instance.onChangePassword( {target: { value: 'mock' }} );
+  component.instance().onChangePassword( {target: { value: 'mock' }} );
 
-  expect(instance.state.password).toBe('mock');
+  expect(component.state('password')).toBe('mock');
 });
 
 it('should be able to loadGIF with successful result', (done) => {

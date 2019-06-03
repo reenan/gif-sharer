@@ -30,7 +30,8 @@ class Uploader extends Component {
 			expiresAt: null,
       loading: false,
       uploadedID: null,
-      modaIsOpen: false,
+			modaIsOpen: false,
+			showLoadingModal: null,
 		}
 	}
 
@@ -55,6 +56,24 @@ class Uploader extends Component {
 			uploadedID: GIFID,
 			modaIsOpen: true
 		});
+	}
+
+	componentDidUpdate(_prevProps, prevState) {
+
+		// Keep track on loading time to display modal
+		if (!prevState.loading && this.state.loading) {
+			this.loadingTimeout = setTimeout(() => {
+				this.setState({ showLoadingModal: true });
+			}, 4000)
+
+		} else if (prevState.loading && !this.state.loading) {
+			clearInterval(this.loadingTimeout);
+		}
+
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.loadingTimeout);
 	}
 
 	changeIsPrivate = (e) => {
@@ -109,8 +128,10 @@ class Uploader extends Component {
       password,
       loading,
       modaIsOpen,
-      uploadedID
+			uploadedID,
+			showLoadingModal
 		} = this.state;
+
 
 		const canUpload = this.canUpload();
 
@@ -119,10 +140,21 @@ class Uploader extends Component {
 
 				{
 					loading ?
-						<Loader /> : null
+						(
+							<div>
+								<Loader />
+								{
+									showLoadingModal ?
+										<Modal open={true}>
+											<p>Just a few more moments, your file is being uploaded.</p>
+											<p>Free tools can be slow ¯\_(ツ)_/¯</p>
+										</Modal> : null
+								}
+							</div>
+						 ) : null
 				}
 
-				<Modal open={modaIsOpen}>
+				<Modal className='share-modal' open={modaIsOpen}>
 					<p>Use this link to share your GIF with the world:</p>
 					<NavLink to={`/${uploadedID}`}>
 						<p>{window.location.href}{uploadedID}</p>
