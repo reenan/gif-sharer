@@ -16,7 +16,7 @@
     "express": "^4.17.1",
     "fetch-base64": "^2.1.2",
     "ffmpeg": "0.0.4",
-    "firebase-admin": "^8.0.0",
+    "firebase-admin": "^11.5.0",
     "fluent-ffmpeg": "^2.1.2",
     "mysql2": "^1.6.5",
     "sequelize-cli": "^5.4.0",
